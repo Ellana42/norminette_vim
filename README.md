@@ -4,6 +4,11 @@ Minimalistic vim plugin for 42 students. It highlights the lines not in line wit
 
 If you have the norminette installed, you should be able to use the plugin just by sourcing norminette.vim in your vimrc, or even appending the code to your vimrc.
 
+# Requirements
+
+- the norminette program
+- Vim 8
+
 # Next steps
 
 - Improve error message display and disparition
