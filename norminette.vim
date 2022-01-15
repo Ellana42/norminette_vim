@@ -1,5 +1,3 @@
-nnoremap <leader>n :silent !norminette<cr>
-
 function GetErrors(filename)
 	let norm_errors = system("norminette " .. a:filename)
 	let norm_errors = norm_errors->split("\n")
@@ -24,6 +22,25 @@ function HighlightNorm(filename)
 	endfor
 endfunction
 
+function GetErrorDict(filename)
+	let errors = GetErrors(a:filename)
+	let error_dict = {}
+	for error in errors
+		eval error_dict->extend({error[1] : error[3]})
+	endfor
+	return error_dict
+endfunction
+
+function GetNormMessage(filename)
+	let error_dict = GetErrorDict(a:filename)
+	if error_dict->has_key(line('.'))
+		echo get(error_dict, line('.'))
+	endif
+endfunction
+
 command Norm call HighlightNorm(expand("%:p"))
 autocmd BufEnter,BufWritePost *.c Norm
 autocmd BufLeave *.c call clearmatches("NormErrors")
+
+command NormMessage call GetNormMessage(expand("%:p"))
+autocmd CursorHold *.c NormMessage
