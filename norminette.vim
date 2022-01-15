@@ -31,11 +31,16 @@ function GetErrorDict(filename)
 	return error_dict
 endfunction
 
+function! s:empty_message(timer)
+	echo ""
+endfunction
+
 function GetNormMessage(filename)
 	let error_dict = GetErrorDict(a:filename)
 	if error_dict->has_key(line('.'))
 		echo get(error_dict, line('.'))
 	endif
+	call timer_start(2000, funcref('s:empty_message'))
 endfunction
 
 command Norm call HighlightNorm(expand("%:p"))
