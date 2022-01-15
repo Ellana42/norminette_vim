@@ -25,4 +25,5 @@ function HighlightNorm(filename)
 endfunction
 
 command Norm call HighlightNorm("")
-autocmd BufWritePost,BufRead *.c Norm
+autocmd BufEnter,BufWritePost *.c Norm
+autocmd BufLeave *.c call clearmatches("NormErrors")
