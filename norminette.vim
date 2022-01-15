@@ -24,6 +24,6 @@ function HighlightNorm(filename)
 	endfor
 endfunction
 
-command Norm call HighlightNorm("")
+command Norm call HighlightNorm(expand("%:p"))
 autocmd BufEnter,BufWritePost *.c Norm
 autocmd BufLeave *.c call clearmatches("NormErrors")
