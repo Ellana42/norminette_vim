@@ -25,4 +25,4 @@ function HighlightNorm(filename)
 endfunction
 
 command Norm call HighlightNorm("")
-autocmd BufWrite *.c Norm
+autocmd BufWritePost,BufRead *.c Norm
