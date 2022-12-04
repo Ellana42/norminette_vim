@@ -40,12 +40,16 @@ function GetNormMessage(filename)
 	if error_dict->has_key(line('.'))
 		echo get(error_dict, line('.'))
 	endif
-	call timer_start(2000, funcref('s:empty_message'))
+	call timer_start(10000, funcref('s:empty_message'))
+	" autocmd CursorMoved *.c funcref('s:empty_message')
 endfunction
 
 command Norm call HighlightNorm(expand("%:p"))
 autocmd BufEnter,BufWritePost *.c Norm
 autocmd BufLeave *.c call clearmatches("NormErrors")
+autocmd BufEnter,BufWritePost *.h Norm
+autocmd BufLeave *.h call clearmatches("NormErrors")
 
 command NormMessage call GetNormMessage(expand("%:p"))
 autocmd CursorHold *.c NormMessage
+autocmd CursorHold *.h NormMessage
