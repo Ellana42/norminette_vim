@@ -40,6 +40,7 @@ function GetNormMessage(filename)
 	if error_dict->has_key(line('.'))
 		echo get(error_dict, line('.'))
 	endif
+	echo 
 	" call timer_start(10000, funcref('s:empty_message'))
 	" autocmd CursorMoved *.c funcref('s:empty_message')
 endfunction
@@ -72,7 +73,7 @@ autocmd BufLeave *.c call clearmatches("NormErrors")
 autocmd BufEnter,BufWritePost *.h Norm
 autocmd BufLeave *.h call clearmatches("NormErrors")
 
-" command NormMessage call GetNormMessage(expand("%:p"))
-" autocmd CursorHold *.c NormMessage
-" autocmd CursorHold *.h NormMessage
-autocmd Filetype c		nnoremap <Space>e :call GoToNextError(expand("%:p"))
+command NormMessage call GetNormMessage(expand("%:p"))
+autocmd CursorMoved *.c NormMessage
+autocmd CursorMoved *.h NormMessage
+autocmd Filetype c		nnoremap <Leader>e :call GoToNextError(expand("%:p"))<CR>
